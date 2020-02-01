@@ -1,0 +1,93 @@
+// 七麦网 榜单数据
+
+1 两个cookie判定间隔时间
+synct -- api.qimai.cn 得到
+syncd -- 
+
+function l(a) {
+    var t, e = new window["RegExp"]("(^| )" + a + "=([^;]*)(;|$)");
+    return (t = window["document"]["cookie"]["match"](e)) ? window["unescape"](t[2]) : null
+}
+var R = +new window["Date"]
+T = 1000 * l('synct') || R
+H = T - R
+window.document.cookie['syncd'] = H
+
+
+2  自定义base64
+g = {}
+// 1 时间
+function l(a) {
+    var t, e = new window["RegExp"]("(^| )" + a + "=([^;]*)(;|$)");
+    return (t = window["document"]["cookie"]["match"](e)) ? window["unescape"](t[2]) : null
+}
+g["difftime"] = -l('syncd') || +new window['DATE'] - 1000 * l('synct')
+
+// 2 时间间隔
+var e = +new window.Date() - (g["difftime"] ? g["difftime"] : 0) - 1515125653845
+    , r = ""
+    , i = ["all", "5000", "iphone", "cn"]; // get参数
+
+i = i["sort"]()["join"]("")
+var n = t.length
+e = "binary"
+
+//3 255 移位
+function G(t) {
+    for (var e = [], n = 0; n < t.length; ++n)
+        e.push(255 & t.charCodeAt(n));
+    return e
+}
+// 加密算法
+u = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q"
+    , "r", "s", "t", "u", "v", "w", "x", "y", "z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "+", "/"]
+function a(t) {
+    return u[t >> 18 & 63] + u[t >> 12 & 63] + u[t >> 6 & 63] + u[63 & t]
+}
+
+function s(t, e, n) {
+    for (var i, r = [], o = e; o < n; o += 3)
+        i = (t[o] << 16 & 16711680) + (t[o + 1] << 8 & 65280) + (255 & t[o + 2]),
+            r.push(a(i));
+    return r.join("")
+}
+
+function l(t) {
+    for (var e, n = t.length, i = n % 3, r = "", o = [], a = 16383, l = 0, c = n - i; l < c; l += a)
+        o.push(s(t, l, l + a > c ? c : l + a));
+    return 1 === i ? (e = t[n - 1],
+        r += u[e >> 2],
+        r += u[e << 4 & 63],
+        r += "==") : 2 === i && (e = (t[n - 2] << 8) + t[n - 1],
+        r += u[e >> 10],
+        r += u[e >> 4 & 63],
+        r += u[e << 2 & 63],
+        r += "="),
+        o.push(r),
+        o.join("")
+}
+str_base_64 = l(G(i))
+
+// 3 加密后拼接
+
+"NTAwMGFsbGNuaXBob25l@#/rank/indexPlus/brand_id/1@#65348481121@#1"
+"NTAwMGFsbGNuaXBob25l@#rank/indexPlus/brand_id@#65355794684"
+i = str_base_64 + '@#' + url + '@#' + e.toString() + '@#1'
+
+// 处理
+i = "NTAwMGFsbGNuaXBob25l@#/rank/indexPlus/brand_id/1@#65348481121@#1"
+function s(a) {
+    return window["String"]["fromCharCode"](a)
+}
+
+function w(n, a) {
+        n = n["split"]("");
+    for (var t = n["length"], e = a["length"], r = "charCodeAt", i = 0; i < t; i++)
+        n[i] = s(n[i]["charCodeAt"](0) ^ a[(i + 10) % 15]["charCodeAt"](0));
+    return n["join"]("")
+}
+stp_3 = w(i,"00000008d78d46a")
+
+//  最后 base64 加密
+window.btoa(stp_3)
+
